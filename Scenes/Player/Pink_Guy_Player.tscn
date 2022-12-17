@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/pink_guy.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Scenes/Player/pink_guy.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Scenes/Scripts/Pink_Guy_Player.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Sounds/Jump 1.wav" type="AudioStream" id=3]
 [ext_resource path="res://Assets/Sounds/RobloxDeathSound.mp3" type="AudioStream" id=4]
@@ -15,7 +15,7 @@ script = ExtResource( 2 )
 position = Vector2( -1, 0 )
 frames = ExtResource( 1 )
 animation = "idle"
-frame = 9
+frame = 10
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

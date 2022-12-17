@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Tile/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Player/Pink_Guy_Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/Scripts/Level_1.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Props/Finish.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Sounds/168734_Jumper.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Scenes/Chain/Chain.tscn" type="PackedScene" id=9]
 
 [node name="Level_" type="Node2D"]
 script = ExtResource( 6 )
@@ -39,7 +40,7 @@ tile_data = PoolIntArray( -589826, 0, 0, -589825, 0, 1, -655360, 0, 1, -655359, 
 position = Vector2( 312, 192 )
 
 [node name="Player" parent="World" instance=ExtResource( 2 )]
-position = Vector2( 136, 232 )
+position = Vector2( 480, 176 )
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 current = true
@@ -60,3 +61,7 @@ position = Vector2( 448, 192 )
 
 [node name="Finish" parent="World" instance=ExtResource( 7 )]
 position = Vector2( 592, 228 )
+
+[node name="Chain" parent="World" instance=ExtResource( 9 )]
+position = Vector2( 424, 36 )
+linkCount = 4
