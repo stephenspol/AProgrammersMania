@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/RobloxDeathSound.mp3-f5bfa050a7714cdcf000d612b92a8cd1.mp3str"
+
+[deps]
+
+source_file="res://Assets/Pixel Adventure 1/Free/Traps/Spikes/RobloxDeathSound.mp3"
+dest_files=[ "res://.import/RobloxDeathSound.mp3-f5bfa050a7714cdcf000d612b92a8cd1.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
