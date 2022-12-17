@@ -23,5 +23,7 @@ mouse_default_cursor_shape = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
+[connection signal="body_entered" from="." to="." method="_on_ChainLoop_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_ChainLoop_body_exited"]
 [connection signal="mouse_entered" from="Control" to="." method="_on_Control_mouse_entered"]
 [connection signal="mouse_exited" from="Control" to="." method="_on_Control_mouse_exited"]

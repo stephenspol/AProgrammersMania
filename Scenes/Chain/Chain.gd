@@ -39,9 +39,11 @@ func addLink(index):
 	add_child(link)
 
 func _process(delta):
+	renderFrame()
+
+func _physics_process(delta):
 	updateLoops()
 	constrainLinks()
-	renderFrame()
 
 func updateLoops():
 	for loop in loops:

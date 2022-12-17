@@ -8,6 +8,8 @@ var is_respawning := false
 var is_panning_to_checkpoint := false
 const PAN_SPEED := 0.1
 
+var is_swinging := false
+
 func _physics_process(delta):
 	# TODO Respawn throws nil if checkpoint was not set
 	if is_panning_to_checkpoint:
@@ -18,10 +20,15 @@ func _physics_process(delta):
 	if is_respawning:
 		return
 	
-	velocity.y += gravity
 	var move_left = Input.get_action_strength("ui_left")
 	var move_right = Input.get_action_strength("ui_right")
 	velocity.x = (move_right - move_left) * move_speed
+	
+	if is_swinging:
+		velocity = move_and_slide(velocity, Vector2.UP)
+		return
+	
+	velocity.y += gravity
 	
 	if move_left > 0:
 		$AnimatedSprite.flip_h = true
@@ -86,3 +93,9 @@ func update_checkpoint(new_checkpoint: Node2D):
 			
 		respawn_checkpoint_node_ref = new_checkpoint
 		respawn_checkpoint_node_ref.set_active(true)
+
+func attached_to_chain(chainLoop : Node2D):
+	is_swinging = true
+	
+func detached_from_chain(chainLoop : Node2D):
+	is_swinging = false

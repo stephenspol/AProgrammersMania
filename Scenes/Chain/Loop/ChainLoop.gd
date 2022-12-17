@@ -15,10 +15,10 @@ func setPosition(index):
 	oldPos = pos
 	position = pos
 
-func _process(delta):
+func _physics_process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and over:
 		var mousePos = get_global_mouse_position()
-		var vector = mousePos - global_position
+		var vector = mousePos - get_global_position()
 		oldPos = pos
 		pos += vector
 
@@ -31,3 +31,16 @@ func _on_Control_mouse_exited():
 	if !anchor:
 		over = false
 		modulate = Color(0xffffffff)
+
+
+func _on_ChainLoop_body_entered(body):
+	if body.has_method("attached_to_chain"):
+		if (!body.is_swinging):
+			pos += body.velocity * .1
+		
+		body.attached_to_chain(self)
+
+
+func _on_ChainLoop_body_exited(body):
+	if body.has_method("detached_from_chain"):
+		body.detached_from_chain(self)
