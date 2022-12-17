@@ -9,6 +9,7 @@ var is_panning_to_checkpoint := false
 const PAN_SPEED := 0.1
 
 func _physics_process(delta):
+	# TODO Respawn throws nil if checkpoint was not set
 	if is_panning_to_checkpoint:
 		position = lerp(position, respawn_checkpoint_node_ref.position, PAN_SPEED)
 		if position.distance_to(respawn_checkpoint_node_ref.position) <= 2:

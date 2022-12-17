@@ -1,4 +1,4 @@
-extends Sprite
+extends Area2D
 
 const CHAIN_LOOP_GAP = 2
 
@@ -11,14 +11,13 @@ var oldPos = Vector2()
 
 func setPosition(index):
 	pos = Vector2(0, index + 1) 
-	pos *= (texture.get_size().y + CHAIN_LOOP_GAP)
+	pos *= ($ChainLoopSprite.texture.get_size().y + CHAIN_LOOP_GAP)
 	oldPos = pos
 	position = pos
 
-# Global Position is what is causing the displacement
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and over:
-		var mousePos = get_viewport().get_mouse_position()
+		var mousePos = get_global_mouse_position()
 		var vector = mousePos - global_position
 		oldPos = pos
 		pos += vector

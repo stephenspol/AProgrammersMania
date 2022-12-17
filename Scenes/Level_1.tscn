@@ -40,9 +40,9 @@ tile_data = PoolIntArray( -589826, 0, 0, -589825, 0, 1, -655360, 0, 1, -655359, 
 position = Vector2( 312, 192 )
 
 [node name="Player" parent="World" instance=ExtResource( 2 )]
-position = Vector2( 480, 176 )
+position = Vector2( 168, 232 )
 
-[node name="Camera2D" type="Camera2D" parent="World/Player"]
+[node name="Player Camera" type="Camera2D" parent="World/Player"]
 current = true
 zoom = Vector2( 0.5, 0.5 )
 editor_draw_limits = true
