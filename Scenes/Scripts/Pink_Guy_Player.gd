@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
-var gravity = 25
+export var swinging_enabled := false
+
+const gravity = 25
 var velocity = Vector2.ZERO
 onready var move_speed : float = 175 * scale.x
 
@@ -9,9 +11,10 @@ var is_panning_to_checkpoint := false
 const PAN_SPEED := 0.1
 
 var is_swinging := false
+var attached_chain_loop : Node2D
 
 func _physics_process(delta):
-	# TODO Respawn throws nil if checkpoint was not set
+	# TODO Respawn throws null if checkpoint was not set
 	if is_panning_to_checkpoint:
 		position = lerp(position, respawn_checkpoint_node_ref.position, PAN_SPEED)
 		if position.distance_to(respawn_checkpoint_node_ref.position) <= 2:
@@ -19,14 +22,16 @@ func _physics_process(delta):
 
 	if is_respawning:
 		return
-	
+		
 	var move_left = Input.get_action_strength("ui_left")
 	var move_right = Input.get_action_strength("ui_right")
-	velocity.x = (move_right - move_left) * move_speed
-	
-	if is_swinging:
+		
+	if is_swinging and swinging_enabled:
+#		attached_chain_loop.velocity.x += (move_right - move_left) * move_speed
 		velocity = move_and_slide(velocity, Vector2.UP)
 		return
+	
+	velocity.x = (move_right - move_left) * move_speed
 	
 	velocity.y += gravity
 	
@@ -95,7 +100,9 @@ func update_checkpoint(new_checkpoint: Node2D):
 		respawn_checkpoint_node_ref.set_active(true)
 
 func attached_to_chain(chainLoop : Node2D):
+	attached_chain_loop = chainLoop
 	is_swinging = true
 	
 func detached_from_chain(chainLoop : Node2D):
+	attached_chain_loop = null
 	is_swinging = false

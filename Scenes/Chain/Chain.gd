@@ -1,3 +1,4 @@
+# Based on https://steemit.com/utopian-io/@sp33dy/tutorial-godot-engine-v3-gdscript-verlet-chain-v0-01
 extends Node2D
 
 const CHAIN_LOOP = preload("res://Scenes/Chain/Loop/ChainLoop.tscn")
@@ -52,24 +53,30 @@ func updateLoops():
 
 func applyMovement(loop):
 	var velocity = calcVelocity(loop)
-	loop.oldPos = loop.pos
-	loop.pos += velocity
-	loop.pos.y += GRAVITY
+#	loop.oldPos = loop.pos
+	loop.velocity = velocity
+	loop.velocity.y += GRAVITY
 
 func calcVelocity(loop):
-	return (loop.pos - loop.oldPos) * RESISTANCE * FRICTION
+	return loop.velocity * RESISTANCE * FRICTION
+#	return (loop.pos - loop.oldPos) * RESISTANCE * FRICTION
 
 func constrainLinks():
 	for link in links:
 		var vector = calcLinkVector(link)
-		var distance = link.childLoop.pos.distance_to(link.parentLoop.pos)
+		var distance = calcAppliedVelocity(link.childLoop).distance_to(calcAppliedVelocity(link.parentLoop))
 		var difference = CHAIN_LINK_LENGTH - distance
 		var percentage = difference / distance
 		vector *= percentage
-		link.childLoop.pos += vector
+		link.childLoop.velocity += vector
+#		link.childLoop.pos += vector
 
 func calcLinkVector(link):
 	return link.childLoop.pos - link.parentLoop.pos
+	
+# Possibly not needed, childLoop.pos - parentLoop.pos seems to be working but other things are failing rn
+func calcAppliedVelocity(loop):
+	return loop.pos + loop.velocity
 	
 func renderFrame():
 	for link in links:
