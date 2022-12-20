@@ -110,7 +110,7 @@ var respawn_checkpoint_node_ref : Node2D
 
 func update_checkpoint(new_checkpoint: Node2D):
 	if new_checkpoint != respawn_checkpoint_node_ref:
-		if respawn_checkpoint_node_ref != null:
+		if respawn_checkpoint_node_ref != null and respawn_checkpoint_node_ref.has_method("set_active"):
 			respawn_checkpoint_node_ref.set_active(false)
 			
 		respawn_checkpoint_node_ref = new_checkpoint
