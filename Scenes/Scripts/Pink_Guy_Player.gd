@@ -5,6 +5,7 @@ export var swinging_enabled := false
 const gravity = 25
 var velocity = Vector2.ZERO
 onready var move_speed : float = 175 * scale.x
+var has_double_jump := false
 
 var is_respawning := false
 var is_panning_to_checkpoint := false
@@ -40,14 +41,19 @@ func _physics_process(delta):
 	elif move_right > 0:
 		$AnimatedSprite.flip_h = false
 		
-	if velocity.x != 0 and is_on_floor():
-		$AnimatedSprite.play("run")
-	elif is_on_floor():
-		$AnimatedSprite.play("idle")
+	if is_on_floor():
+		if velocity.x != 0:
+			$AnimatedSprite.play("run")
+		else:
+			$AnimatedSprite.play("idle")
+		has_double_jump = true
+	elif is_on_wall():
+		$AnimatedSprite.play("wall jump")
 	elif velocity.y > 0:
 		$AnimatedSprite.play("fall")
 	elif velocity.y < 0:
-		$AnimatedSprite.play("jump")
+		if $AnimatedSprite.animation != "double jump":
+			$AnimatedSprite.play("jump")
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -58,8 +64,19 @@ func _ready():
 const JUMP_FORCE := 400
 
 func _input(event):
-	if event.is_action_pressed("ui_up") and is_on_floor():
-		velocity.y -= JUMP_FORCE
+	if event.is_action_pressed("ui_up"):
+		if is_on_floor():
+			velocity.y -= JUMP_FORCE
+		elif has_double_jump:
+			$AnimatedSprite.play("double jump")
+			velocity.y = -JUMP_FORCE
+			has_double_jump = false
+		elif is_on_wall():
+			velocity.y = -JUMP_FORCE
+			if $AnimatedSprite.flip_h:
+				velocity.x = move_speed * 2
+			else:
+				velocity.x = -move_speed * 2
 		$JumpSound.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

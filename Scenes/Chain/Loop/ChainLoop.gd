@@ -9,9 +9,9 @@ var over = false
 var attachedEntity : Node2D
 
 var pos = Vector2()
-#var oldPos = Vector2()
 
 var velocity = Vector2.ZERO
+const MAX_SPEED = 10
 
 #func _ready():
 #	if self.get_name() != "AnchorLoop":
@@ -19,15 +19,14 @@ var velocity = Vector2.ZERO
 #		self.set_name(str(randNum))
 
 func _physics_process(delta):
+	velocity = velocity.limit_length(MAX_SPEED)
 	pos += velocity
 	if attachedEntity != null and attachedEntity.swinging_enabled:
-		attachedEntity.velocity = velocity
-	velocity = Vector2.ZERO
+		attachedEntity.velocity += velocity
 
 func setPosition(index):
 	pos = Vector2(0, index + 1) 
 	pos *= ($ChainLoopSprite.texture.get_size().y + CHAIN_LOOP_GAP)
-#	oldPos = pos
 	position = pos
 
 func _on_Control_mouse_entered():
@@ -65,6 +64,5 @@ func _input(event):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and over:
 		var mousePos = get_global_mouse_position()
 		var vector = mousePos - get_global_position()
-#		oldPos = pos
-		pos += vector
-#		velocity += vector
+#		pos += vector
+		velocity += vector

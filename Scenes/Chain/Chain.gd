@@ -53,7 +53,6 @@ func updateLoops():
 
 func applyMovement(loop):
 	var velocity = calcVelocity(loop)
-#	loop.oldPos = loop.pos
 	loop.velocity = velocity
 	loop.velocity.y += GRAVITY
 
